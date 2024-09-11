@@ -1,4 +1,4 @@
-const allSkills = [
+export const allSkills = [
   {
     id: 1,
     name: "Cooking",
@@ -68,4 +68,8 @@ const allSkills = [
 
 export const getInitialSkills = (selectedGoals) => {
   return allSkills.filter(skill => selectedGoals.includes(skill.goalId));
+};
+
+export const getAdditionalSkills = (selectedGoals) => {
+  return allSkills.filter(skill => !selectedGoals.includes(skill.goalId));
 };
