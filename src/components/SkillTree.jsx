@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
+  const allSubSkillsCompleted = skill.subSkills.every(subSkill => subSkill.completed);
+
   return (
     <div className="mt-4">
       <div className="flex flex-col items-center">
@@ -51,15 +53,22 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           ))}
         </div>
       </div>
-      <div className="mt-4 text-center">
-        <Button 
-          className="skeuomorphic-button" 
-          onClick={() => logPractice(skill)}
-          disabled={!skill.subSkills.every(subSkill => subSkill.completed)}
-        >
-          Log Practice
-        </Button>
-      </div>
+      {skill.name === "Using Uber" && allSubSkillsCompleted && (
+        <div className="mt-4 text-center space-x-4">
+          <Button 
+            className="skeuomorphic-button" 
+            onClick={() => logPractice(skill)}
+          >
+            Log Practice
+          </Button>
+          <Button 
+            className="skeuomorphic-button-dark" 
+            onClick={() => console.log("Not ready to practice")}
+          >
+            Not Ready to Practice
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
