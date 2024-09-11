@@ -6,74 +6,7 @@ import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
 import SkillTree from './SkillTree';
 import PracticeLog from './PracticeLog';
-
-const allSkills = [
-  {
-    id: 1,
-    name: "Cooking",
-    progress: 30,
-    subSkills: [
-      { id: 11, name: "Meal Prep", completed: false },
-      { id: 12, name: "Using Appliances", completed: true },
-      { id: 13, name: "Basic Recipes", completed: false },
-    ],
-    practiceLog: [],
-    mastered: false,
-    goalId: 'cooking',
-  },
-  {
-    id: 2,
-    name: "Budgeting",
-    progress: 50,
-    subSkills: [
-      { id: 21, name: "Expense Tracking", completed: true },
-      { id: 22, name: "Creating a Budget", completed: false },
-      { id: 23, name: "Saving Strategies", completed: true },
-    ],
-    practiceLog: [],
-    mastered: false,
-    goalId: 'budgeting',
-  },
-  {
-    id: 3,
-    name: "Social Skills",
-    progress: 20,
-    subSkills: [
-      { id: 31, name: "Active Listening", completed: false },
-      { id: 32, name: "Conversation Starters", completed: false },
-      { id: 33, name: "Body Language", completed: false },
-    ],
-    practiceLog: [],
-    mastered: false,
-    goalId: 'socialSkills',
-  },
-  {
-    id: 4,
-    name: "Fitness",
-    progress: 40,
-    subSkills: [
-      { id: 41, name: "Cardio Exercises", completed: true },
-      { id: 42, name: "Strength Training", completed: false },
-      { id: 43, name: "Flexibility", completed: false },
-    ],
-    practiceLog: [],
-    mastered: false,
-    goalId: 'fitness',
-  },
-  {
-    id: 5,
-    name: "Time Management",
-    progress: 60,
-    subSkills: [
-      { id: 51, name: "Prioritization", completed: true },
-      { id: 52, name: "Task Scheduling", completed: true },
-      { id: 53, name: "Avoiding Procrastination", completed: false },
-    ],
-    practiceLog: [],
-    mastered: false,
-    goalId: 'timeManagement',
-  },
-];
+import { getInitialSkills } from '../utils/skillUtils';
 
 const SkillMap = () => {
   const [skills, setSkills] = useState([]);
@@ -84,8 +17,8 @@ const SkillMap = () => {
 
   useEffect(() => {
     const selectedGoals = JSON.parse(localStorage.getItem('selectedGoals') || '[]');
-    const filteredSkills = allSkills.filter(skill => selectedGoals.includes(skill.goalId));
-    setSkills(filteredSkills);
+    const initialSkills = getInitialSkills(selectedGoals);
+    setSkills(initialSkills);
   }, []);
 
   const toggleSkill = (skillId) => {
@@ -138,8 +71,55 @@ const SkillMap = () => {
     const skill = skills.find(s => s.id === skillId);
     const subSkill = skill.subSkills.find(ss => ss.id === subSkillId);
     toast.info(`Showing learning materials for ${subSkill.name} in ${skill.name}`);
-    // TODO: Implement actual learning materials display logic
   };
+
+  const renderSkillCard = (skill) => (
+    <Card key={skill.id} className="mb-4 skeuomorphic-card">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => toggleSkill(skill.id)}
+          className="text-neuyellow hover:text-neuyellow-light"
+        >
+          {expandedSkill === skill.id ? <ChevronUp /> : <ChevronDown />}
+        </Button>
+      </CardHeader>
+      <CardContent>
+        <div className="skeuomorphic-progress">
+          <div
+            className="skeuomorphic-progress-bar"
+            style={{ width: `${skill.progress}%` }}
+          ></div>
+        </div>
+        <p className="text-sm text-gray-300 mt-2">
+          Progress: {skill.progress}%
+        </p>
+        {expandedSkill === skill.id && (
+          <>
+            <SkillTree
+              skill={skill}
+              markSubSkillCompleted={markSubSkillCompleted}
+              logPractice={logPractice}
+              showLearningMaterials={showLearningMaterials}
+            />
+            {skill.practiceLog.length > 0 && (
+              <>
+                <PracticeLog practiceLog={skill.practiceLog} />
+                <Button 
+                  className="mt-4 skeuomorphic-button"
+                  onClick={() => markSkillMastered(skill.id)}
+                >
+                  Completed Independently
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
 
   const activeSkills = skills.filter(skill => !skill.mastered);
   const masteredSkills = skills.filter(skill => skill.mastered);
@@ -148,56 +128,8 @@ const SkillMap = () => {
     <div className="container mx-auto p-4 bg-neugray min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-6 text-white">Your SkillMap</h1>
       
-      {/* Active Skills */}
-      {activeSkills.map((skill) => (
-        <Card key={skill.id} className="mb-4 skeuomorphic-card">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => toggleSkill(skill.id)}
-              className="text-neuyellow hover:text-neuyellow-light"
-            >
-              {expandedSkill === skill.id ? <ChevronUp /> : <ChevronDown />}
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="skeuomorphic-progress">
-              <div
-                className="skeuomorphic-progress-bar"
-                style={{ width: `${skill.progress}%` }}
-              ></div>
-            </div>
-            <p className="text-sm text-gray-300 mt-2">
-              Progress: {skill.progress}%
-            </p>
-            {expandedSkill === skill.id && (
-              <>
-                <SkillTree
-                  skill={skill}
-                  markSubSkillCompleted={markSubSkillCompleted}
-                  logPractice={logPractice}
-                  showLearningMaterials={showLearningMaterials}
-                />
-                {skill.practiceLog.length > 0 && (
-                  <>
-                    <PracticeLog practiceLog={skill.practiceLog} />
-                    <Button 
-                      className="mt-4 skeuomorphic-button"
-                      onClick={() => markSkillMastered(skill.id)}
-                    >
-                      Completed Independently
-                    </Button>
-                  </>
-                )}
-              </>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+      {activeSkills.map(renderSkillCard)}
 
-      {/* Mastered Skills */}
       {masteredSkills.length > 0 && (
         <Card className="mb-4 skeuomorphic-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
