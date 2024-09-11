@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import NotReadyDialog from './NotReadyDialog';
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
+  const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
   const allSubSkillsCompleted = skill.subSkills.every(subSkill => subSkill.completed);
+
+  const handleNotReadyClick = () => {
+    setIsNotReadyDialogOpen(true);
+  };
 
   return (
     <div className="mt-4">
@@ -63,12 +69,16 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </Button>
           <Button 
             className="skeuomorphic-button-dark" 
-            onClick={() => console.log("Not ready to practice")}
+            onClick={handleNotReadyClick}
           >
             Not Ready to Practice
           </Button>
         </div>
       )}
+      <NotReadyDialog 
+        isOpen={isNotReadyDialogOpen} 
+        onClose={() => setIsNotReadyDialogOpen(false)} 
+      />
     </div>
   );
 };
