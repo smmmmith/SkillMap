@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
 import SkillDetails from './SkillDetails';
 import PracticeLog from './PracticeLog';
@@ -19,6 +20,7 @@ const SkillMap = () => {
         { id: 13, name: "Basic Recipes", completed: false },
       ],
       practiceLog: [],
+      mastered: false,
     },
     {
       id: 2,
@@ -30,6 +32,7 @@ const SkillMap = () => {
         { id: 23, name: "Saving Strategies", completed: true },
       ],
       practiceLog: [],
+      mastered: false,
     },
   ]);
   const [expandedSkill, setExpandedSkill] = useState(null);
@@ -75,6 +78,13 @@ const SkillMap = () => {
     setIsLogModalOpen(false);
   };
 
+  const markSkillMastered = (skillId) => {
+    setSkills(skills.map(skill => 
+      skill.id === skillId ? { ...skill, mastered: true, progress: 100 } : skill
+    ));
+    toast.success(`Congratulations! You've mastered ${skills.find(s => s.id === skillId).name}!`);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Your SkillMap</h1>
@@ -92,16 +102,30 @@ const SkillMap = () => {
           </CardHeader>
           <CardContent>
             <Progress value={skill.progress} className="w-full" />
-            <p className="text-sm text-gray-500 mt-2">Progress: {skill.progress}%</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Progress: {skill.progress}% {skill.mastered && "(Mastered)"}
+            </p>
             {expandedSkill === skill.id && (
-              <SkillDetails
-                skill={skill}
-                markSubSkillCompleted={markSubSkillCompleted}
-                logPractice={logPractice}
-              />
-            )}
-            {skill.practiceLog.length > 0 && (
-              <PracticeLog practiceLog={skill.practiceLog} />
+              <>
+                <SkillDetails
+                  skill={skill}
+                  markSubSkillCompleted={markSubSkillCompleted}
+                  logPractice={logPractice}
+                />
+                {skill.practiceLog.length > 0 && (
+                  <>
+                    <PracticeLog practiceLog={skill.practiceLog} />
+                    {!skill.mastered && (
+                      <Button 
+                        className="mt-4" 
+                        onClick={() => markSkillMastered(skill.id)}
+                      >
+                        Completed Independently
+                      </Button>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </CardContent>
         </Card>
