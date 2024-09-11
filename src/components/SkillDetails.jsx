@@ -12,13 +12,15 @@ const SkillDetails = ({ skill, markSubSkillCompleted, logPractice, showLearningM
           <li key={subSkill.id} className="flex items-center justify-between">
             <span>{subSkill.name}</span>
             <div className="space-x-2">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => showLearningMaterials(skill.id, subSkill.id)}
-              >
-                Learning Materials
-              </Button>
+              {!subSkill.completed && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+                >
+                  Learning Materials
+                </Button>
+              )}
               {subSkill.completed ? (
                 <span className="text-green-500">Completed</span>
               ) : (
