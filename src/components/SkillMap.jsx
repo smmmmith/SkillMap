@@ -55,6 +55,10 @@ const SkillMap = () => {
     console.log(`Logging practice for skill ${skillId}`);
   };
 
+  const areAllSubSkillsCompleted = (skill) => {
+    return skill.subSkills.every(subSkill => subSkill.completed);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Your SkillMap</h1>
@@ -93,7 +97,11 @@ const SkillMap = () => {
                     </li>
                   ))}
                 </ul>
-                <Button className="mt-4" onClick={() => logPractice(skill.id)}>
+                <Button 
+                  className="mt-4" 
+                  onClick={() => logPractice(skill.id)}
+                  disabled={!areAllSubSkillsCompleted(skill)}
+                >
                   Log Practice
                 </Button>
               </div>
