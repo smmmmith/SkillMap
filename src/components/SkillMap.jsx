@@ -38,6 +38,7 @@ const SkillMap = () => {
   const [expandedSkill, setExpandedSkill] = useState(null);
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState(null);
+  const [isMasteredExpanded, setIsMasteredExpanded] = useState(false);
 
   const toggleSkill = (skillId) => {
     setExpandedSkill(expandedSkill === skillId ? null : skillId);
@@ -85,10 +86,15 @@ const SkillMap = () => {
     toast.success(`Congratulations! You've mastered ${skills.find(s => s.id === skillId).name}!`);
   };
 
+  const activeSkills = skills.filter(skill => !skill.mastered);
+  const masteredSkills = skills.filter(skill => skill.mastered);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Your SkillMap</h1>
-      {skills.map((skill) => (
+      
+      {/* Active Skills */}
+      {activeSkills.map((skill) => (
         <Card key={skill.id} className="mb-4">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-2xl font-bold">{skill.name}</CardTitle>
@@ -103,7 +109,7 @@ const SkillMap = () => {
           <CardContent>
             <Progress value={skill.progress} className="w-full" />
             <p className="text-sm text-gray-500 mt-2">
-              Progress: {skill.progress}% {skill.mastered && "(Mastered)"}
+              Progress: {skill.progress}%
             </p>
             {expandedSkill === skill.id && (
               <>
@@ -115,14 +121,12 @@ const SkillMap = () => {
                 {skill.practiceLog.length > 0 && (
                   <>
                     <PracticeLog practiceLog={skill.practiceLog} />
-                    {!skill.mastered && (
-                      <Button 
-                        className="mt-4" 
-                        onClick={() => markSkillMastered(skill.id)}
-                      >
-                        Completed Independently
-                      </Button>
-                    )}
+                    <Button 
+                      className="mt-4" 
+                      onClick={() => markSkillMastered(skill.id)}
+                    >
+                      Completed Independently
+                    </Button>
                   </>
                 )}
               </>
@@ -130,6 +134,33 @@ const SkillMap = () => {
           </CardContent>
         </Card>
       ))}
+
+      {/* Mastered Skills */}
+      {masteredSkills.length > 0 && (
+        <Card className="mb-4">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-2xl font-bold">Mastered Skills</CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMasteredExpanded(!isMasteredExpanded)}
+            >
+              {isMasteredExpanded ? <ChevronUp /> : <ChevronDown />}
+            </Button>
+          </CardHeader>
+          {isMasteredExpanded && (
+            <CardContent>
+              {masteredSkills.map((skill) => (
+                <div key={skill.id} className="mb-2">
+                  <h3 className="text-xl font-semibold">{skill.name}</h3>
+                  <p className="text-sm text-gray-500">Mastered</p>
+                </div>
+              ))}
+            </CardContent>
+          )}
+        </Card>
+      )}
+
       <PracticeLogModal
         isOpen={isLogModalOpen}
         onClose={() => setIsLogModalOpen(false)}
