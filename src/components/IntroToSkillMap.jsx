@@ -42,7 +42,6 @@ const IntroToSkillMap = () => {
 
   useEffect(() => {
     if (isLoading) {
-      // Simulate API call or processing time
       const timer = setTimeout(() => {
         navigate('/skillmap');
       }, 3000);
@@ -52,22 +51,24 @@ const IntroToSkillMap = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-neugray p-4">
-      {!isLoading ? (
-        <Card className="w-full max-w-md skeuomorphic-card">
-          <CardContent className="p-6">
-            <h2 className="text-2xl font-bold mb-4 text-neuyellow">{introCards[currentCard].title}</h2>
-            <p className="text-white mb-6">{introCards[currentCard].content}</p>
-            <Button onClick={handleNext} className="w-full skeuomorphic-button">
-              {currentCard < introCards.length - 1 ? "Next" : "Create My SkillMap"}
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4 text-white">Creating Your SkillMap</h2>
-          <Loader2 className="w-16 h-16 animate-spin text-neuyellow mx-auto" />
-        </div>
-      )}
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold mb-4 text-white">Creating Your SkillMap</h2>
+        <Loader2 className="w-16 h-16 animate-spin text-neuyellow mx-auto" />
+      </div>
+
+      <Card className="w-full max-w-md skeuomorphic-card">
+        <CardContent className="p-6">
+          <h2 className="text-2xl font-bold mb-4 text-neuyellow">{introCards[currentCard].title}</h2>
+          <p className="text-white mb-6">{introCards[currentCard].content}</p>
+          <Button 
+            onClick={handleNext} 
+            className="w-full skeuomorphic-button"
+            disabled={isLoading}
+          >
+            {currentCard < introCards.length - 1 ? "Next" : "Create My SkillMap"}
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };
