@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neugray">
-      <Card className="w-full max-w-md neu-card">
+      <Card className="w-full max-w-md skeuomorphic-card">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-neuyellow">Login to SkillMap.io</CardTitle>
           <CardDescription className="text-gray-300">Enter your credentials to access your skill map</CardDescription>
@@ -32,7 +32,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="neu-input"
+                className="skeuomorphic-input"
               />
               <Input
                 type="password"
@@ -40,13 +40,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="neu-input"
+                className="skeuomorphic-input"
               />
             </div>
           </form>
         </CardContent>
         <CardFooter>
-          <Button className="w-full neu-button bg-neuyellow text-neugray hover:bg-neuyellow-light" onClick={handleLogin}>Log In</Button>
+          <Button className="w-full skeuomorphic-button" onClick={handleLogin}>Log In</Button>
         </CardFooter>
       </Card>
     </div>

@@ -33,7 +33,7 @@ const AssessmentPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neugray">
-      <Card className="w-full max-w-md neu-card">
+      <Card className="w-full max-w-md skeuomorphic-card">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-neuyellow">Select Your Life Goals</CardTitle>
           <CardDescription className="text-gray-300">Choose the areas you want to improve in your life</CardDescription>
@@ -47,7 +47,7 @@ const AssessmentPage = () => {
                     id={goal.id}
                     checked={selectedGoals.includes(goal.id)}
                     onCheckedChange={() => handleGoalToggle(goal.id)}
-                    className="neu-pressed bg-neugray-dark border-neuyellow"
+                    className="skeuomorphic-input"
                   />
                   <label
                     htmlFor={goal.id}
@@ -61,7 +61,7 @@ const AssessmentPage = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button className="w-full neu-button bg-neuyellow text-neugray hover:bg-neuyellow-light" onClick={handleSubmit}>Submit Goals</Button>
+          <Button className="w-full skeuomorphic-button" onClick={handleSubmit}>Submit Goals</Button>
         </CardFooter>
       </Card>
     </div>

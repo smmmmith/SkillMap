@@ -42,27 +42,81 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
   }
 }
 
-.neu-flat {
-  @apply bg-neugray shadow-neu-flat;
+.skeuomorphic-card {
+  @apply bg-neugray rounded-xl overflow-hidden;
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.1),
+    0 8px 20px rgba(0, 0, 0, 0.6);
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
 }
 
-.neu-pressed {
-  @apply bg-neugray shadow-neu-pressed;
+.skeuomorphic-button {
+  @apply bg-neuyellow text-neugray font-semibold py-2 px-4 rounded-lg;
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+  transition: all 0.2s ease-in-out;
 }
 
-.neu-button {
-  @apply bg-neugray text-white py-2 px-4 rounded-lg shadow-neu-flat 
-         hover:shadow-neu-pressed transition-all duration-200 ease-in-out;
+.skeuomorphic-button:hover {
+  @apply bg-neuyellow-light;
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.3),
+    0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
-.neu-input {
-  @apply bg-neugray-dark text-white py-2 px-4 rounded-lg shadow-neu-pressed 
-         focus:outline-none focus:ring-2 focus:ring-neuyellow;
+.skeuomorphic-button:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2px 3px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.neu-card {
-  @apply bg-neugray rounded-xl shadow-neu-flat p-6;
+.skeuomorphic-input {
+  @apply bg-neugray-dark text-white py-2 px-4 rounded-lg;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skeuomorphic-input:focus {
+  @apply outline-none ring-2 ring-neuyellow;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(253, 216, 53, 0.3);
+}
+
+.skeuomorphic-progress {
+  @apply bg-neugray-dark rounded-full overflow-hidden;
+  height: 20px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.skeuomorphic-progress-bar {
+  @apply bg-neuyellow h-full rounded-full;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 40px 40px;
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+  0% { background-position: 40px 0; }
+  100% { background-position: 0 0; }
 }

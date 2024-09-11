@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
@@ -102,7 +101,7 @@ const SkillMap = () => {
       
       {/* Active Skills */}
       {activeSkills.map((skill) => (
-        <Card key={skill.id} className="mb-4 neu-card">
+        <Card key={skill.id} className="mb-4 skeuomorphic-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
             <Button
@@ -115,7 +114,12 @@ const SkillMap = () => {
             </Button>
           </CardHeader>
           <CardContent>
-            <Progress value={skill.progress} className="w-full bg-neugray-dark" indicatorClassName="bg-neuyellow" />
+            <div className="skeuomorphic-progress">
+              <div
+                className="skeuomorphic-progress-bar"
+                style={{ width: `${skill.progress}%` }}
+              ></div>
+            </div>
             <p className="text-sm text-gray-300 mt-2">
               Progress: {skill.progress}%
             </p>
@@ -131,7 +135,7 @@ const SkillMap = () => {
                   <>
                     <PracticeLog practiceLog={skill.practiceLog} />
                     <Button 
-                      className="mt-4 neu-button bg-neuyellow text-neugray"
+                      className="mt-4 skeuomorphic-button"
                       onClick={() => markSkillMastered(skill.id)}
                     >
                       Completed Independently
@@ -146,7 +150,7 @@ const SkillMap = () => {
 
       {/* Mastered Skills */}
       {masteredSkills.length > 0 && (
-        <Card className="mb-4 neu-card">
+        <Card className="mb-4 skeuomorphic-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-2xl font-bold text-white">Mastered Skills</CardTitle>
             <Button
