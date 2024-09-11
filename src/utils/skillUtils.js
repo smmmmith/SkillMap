@@ -73,6 +73,13 @@ export const allSkills = [
       { id: 62, name: "Navigating the App", completed: false },
       { id: 63, name: "Scheduling a Trip", completed: false },
     ],
+    level2SubSkills: [
+      { id: 64, name: "Setting up Payment", completed: false },
+      { id: 65, name: "Social Norms of Uber", completed: false },
+      { id: 66, name: "Explaining Safety Features", completed: false },
+      { id: 67, name: "Verify Correct Car", completed: false },
+      { id: 68, name: "Leaving a Rating", completed: false },
+    ],
     practiceLog: [],
     mastered: false,
     goalId: 'transportation',

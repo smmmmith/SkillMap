@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import NotReadyDialog from './NotReadyDialog';
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
   const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
+  const [showLevel2SubSkills, setShowLevel2SubSkills] = useState(false);
   const allSubSkillsCompleted = skill.subSkills.every(subSkill => subSkill.completed);
 
   const handleNotReadyClick = () => {
     setIsNotReadyDialogOpen(true);
+    setShowLevel2SubSkills(true);
   };
 
   return (
@@ -73,6 +75,44 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           >
             Not Ready to Practice
           </Button>
+        </div>
+      )}
+      {skill.name === "Using Uber" && showLevel2SubSkills && (
+        <div className="mt-8">
+          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
+          <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
+          <div className="flex flex-wrap justify-center gap-4">
+            {skill.level2SubSkills.map((subSkill) => (
+              <div key={subSkill.id} className="flex flex-col items-center">
+                <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
+                  <CardContent className="p-2 text-center">
+                    <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
+                  </CardContent>
+                </Card>
+                <div className="flex flex-col space-y-2">
+                  {!subSkill.completed && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+                      className="skeuomorphic-button-dark text-xs"
+                    >
+                      Learn
+                    </Button>
+                  )}
+                  {!subSkill.completed && (
+                    <Button
+                      size="sm"
+                      onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                      className="skeuomorphic-button text-xs"
+                    >
+                      Complete
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       <NotReadyDialog 
