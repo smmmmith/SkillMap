@@ -9,7 +9,7 @@ const MasteredSkills = ({ skills }) => {
   if (skills.length === 0) return null;
 
   return (
-    <Card className="mb-4 skeuomorphic-card bg-green-900">
+    <Card className="mb-4 skeuomorphic-card bg-green-700">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-bold text-white">Mastered Skills</CardTitle>
         <Button
@@ -26,7 +26,7 @@ const MasteredSkills = ({ skills }) => {
           {skills.map((skill) => (
             <div key={skill.id} className="mb-2">
               <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
-              <p className="text-sm text-gray-300">Mastered</p>
+              <p className="text-sm text-gray-200">Mastered</p>
             </div>
           ))}
         </CardContent>
