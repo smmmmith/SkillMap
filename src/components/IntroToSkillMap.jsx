@@ -56,7 +56,7 @@ const IntroToSkillMap = () => {
         <Loader2 className="w-16 h-16 animate-spin text-neuyellow mx-auto" />
       </div>
 
-      <Card className="w-full max-w-md skeuomorphic-card">
+      <Card className="w-full max-w-md bg-[#2b2e33]">
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold mb-4 text-neuyellow">{introCards[currentCard].title}</h2>
           <p className="text-white mb-6">{introCards[currentCard].content}</p>

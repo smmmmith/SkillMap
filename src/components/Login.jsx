@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-appbg">
-      <Card className="w-full max-w-md skeuomorphic-card">
+      <Card className="w-full max-w-md bg-[#2b2e33]">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-neuyellow">Login to SkillMap.io</CardTitle>
           <CardDescription className="text-gray-300">Enter your credentials to access your skill map</CardDescription>
