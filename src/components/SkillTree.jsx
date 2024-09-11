@@ -9,7 +9,6 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         <Card className="w-40 mb-4 skeuomorphic-card">
           <CardContent className="p-4 text-center">
             <h3 className="font-semibold text-neuyellow">{skill.name}</h3>
-            <p className="text-sm text-gray-300">Progress: {skill.progress}%</p>
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
