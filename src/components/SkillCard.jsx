@@ -9,7 +9,7 @@ const SkillCard = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card key={skill.id} className="mb-4 bg-[#2b2e33]">
+    <Card key={skill.id} className="mb-4 skeuomorphic-card">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
         <Button
