@@ -10,6 +10,7 @@ const lifeGoals = [
   { id: 'cooking', label: 'Cooking' },
   { id: 'fitness', label: 'Fitness' },
   { id: 'timeManagement', label: 'Time Management' },
+  { id: 'transportation', label: 'Transportation' },
 ];
 
 const AssessmentPage = () => {

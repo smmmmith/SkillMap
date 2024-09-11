@@ -64,6 +64,19 @@ export const allSkills = [
     mastered: false,
     goalId: 'timeManagement',
   },
+  {
+    id: 6,
+    name: "Using Uber",
+    progress: 0,
+    subSkills: [
+      { id: 61, name: "Introduction to Uber", completed: false },
+      { id: 62, name: "Navigating the App", completed: false },
+      { id: 63, name: "Scheduling a Trip", completed: false },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'transportation',
+  },
 ];
 
 export const getInitialSkills = (selectedGoals) => {
