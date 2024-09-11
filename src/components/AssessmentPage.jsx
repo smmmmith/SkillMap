@@ -28,7 +28,7 @@ const AssessmentPage = () => {
     e.preventDefault();
     console.log('Selected goals:', selectedGoals);
     // TODO: Send selected goals to backend
-    navigate('/skillmap');
+    navigate('/intro-to-skillmap');
   };
 
   return (
