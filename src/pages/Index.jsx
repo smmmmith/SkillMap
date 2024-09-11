@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-neugray">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-appbg">
       <div className="text-center text-white skeuomorphic-card p-8">
         <h1 className="text-5xl font-bold mb-4 text-neuyellow">Welcome to SkillMap.io</h1>
         <p className="text-xl mb-8">Map your skills, achieve your goals</p>

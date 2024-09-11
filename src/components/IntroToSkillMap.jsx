@@ -50,7 +50,7 @@ const IntroToSkillMap = () => {
   }, [isLoading, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-neugray p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-appbg p-4">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold mb-4 text-white">Creating Your SkillMap</h2>
         <Loader2 className="w-16 h-16 animate-spin text-neuyellow mx-auto" />

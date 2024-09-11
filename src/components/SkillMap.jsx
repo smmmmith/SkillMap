@@ -80,7 +80,7 @@ const SkillMap = () => {
   const masteredSkills = skills.filter(skill => skill.mastered);
 
   return (
-    <div className="container mx-auto p-4 bg-neugray min-h-screen text-white">
+    <div className="container mx-auto p-4 bg-appbg min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-6 text-white">Your SkillMap</h1>
       
       {activeSkills.map(skill => (

@@ -31,7 +31,7 @@ const AssessmentPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neugray">
+    <div className="min-h-screen flex items-center justify-center bg-appbg">
       <Card className="w-full max-w-md skeuomorphic-card">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-neuyellow">Select Your Life Goals</CardTitle>
