@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
-import SkillDetails from './SkillDetails';
+import SkillTree from './SkillTree';
 import PracticeLog from './PracticeLog';
 
 const SkillMap = () => {
@@ -125,7 +125,7 @@ const SkillMap = () => {
             </p>
             {expandedSkill === skill.id && (
               <>
-                <SkillDetails
+                <SkillTree
                   skill={skill}
                   markSubSkillCompleted={markSubSkillCompleted}
                   logPractice={logPractice}
