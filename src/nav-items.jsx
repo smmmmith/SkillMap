@@ -1,6 +1,7 @@
-import { HomeIcon, LogInIcon } from "lucide-react";
+import { HomeIcon, LogInIcon, ClipboardCheckIcon } from "lucide-react";
 import Index from "./pages/Index.jsx";
 import Login from "./components/Login.jsx";
+import AssessmentPage from "./components/AssessmentPage.jsx";
 
 export const navItems = [
   {
@@ -14,5 +15,11 @@ export const navItems = [
     to: "/login",
     icon: <LogInIcon className="h-4 w-4" />,
     page: <Login />,
+  },
+  {
+    title: "Assessment",
+    to: "/assessment",
+    icon: <ClipboardCheckIcon className="h-4 w-4" />,
+    page: <AssessmentPage />,
   },
 ];
