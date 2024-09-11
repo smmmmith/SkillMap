@@ -9,7 +9,7 @@ const MasteredSkills = ({ skills }) => {
   if (skills.length === 0) return null;
 
   return (
-    <Card className="mb-4 skeuomorphic-card bg-neugray-light">
+    <Card className="mb-4 skeuomorphic-card bg-green-900">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-bold text-white">Mastered Skills</CardTitle>
         <Button

@@ -9,7 +9,7 @@ const AdditionalSkills = ({ skills, addSkillToMap }) => {
   if (skills.length === 0) return null;
 
   return (
-    <Card className="mb-4 skeuomorphic-card bg-neugray-dark">
+    <Card className="mb-4 skeuomorphic-card bg-blue-900">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-bold text-white">Additional Skills</CardTitle>
         <Button
