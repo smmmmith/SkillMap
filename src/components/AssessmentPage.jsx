@@ -28,15 +28,15 @@ const AssessmentPage = () => {
     e.preventDefault();
     console.log('Selected goals:', selectedGoals);
     // TODO: Send selected goals to backend
-    navigate('/skillmap'); // Redirect to SkillMap page
+    navigate('/skillmap');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-neugray">
+      <Card className="w-full max-w-md neu-card">
         <CardHeader>
-          <CardTitle>Select Your Life Goals</CardTitle>
-          <CardDescription>Choose the areas you want to improve in your life</CardDescription>
+          <CardTitle className="text-2xl font-bold text-neuyellow">Select Your Life Goals</CardTitle>
+          <CardDescription className="text-gray-300">Choose the areas you want to improve in your life</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -47,10 +47,11 @@ const AssessmentPage = () => {
                     id={goal.id}
                     checked={selectedGoals.includes(goal.id)}
                     onCheckedChange={() => handleGoalToggle(goal.id)}
+                    className="neu-pressed bg-neugray-dark border-neuyellow"
                   />
                   <label
                     htmlFor={goal.id}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-white"
                   >
                     {goal.label}
                   </label>
@@ -60,7 +61,7 @@ const AssessmentPage = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={handleSubmit}>Submit Goals</Button>
+          <Button className="w-full neu-button bg-neuyellow text-neugray hover:bg-neuyellow-light" onClick={handleSubmit}>Submit Goals</Button>
         </CardFooter>
       </Card>
     </div>

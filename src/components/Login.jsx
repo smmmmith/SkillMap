@@ -17,11 +17,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-neugray">
+      <Card className="w-full max-w-md neu-card">
         <CardHeader>
-          <CardTitle>Login to SkillMap.io</CardTitle>
-          <CardDescription>Enter your credentials to access your skill map</CardDescription>
+          <CardTitle className="text-2xl font-bold text-neuyellow">Login to SkillMap.io</CardTitle>
+          <CardDescription className="text-gray-300">Enter your credentials to access your skill map</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
@@ -32,6 +32,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="neu-input"
               />
               <Input
                 type="password"
@@ -39,12 +40,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="neu-input"
               />
             </div>
           </form>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={handleLogin}>Log In</Button>
+          <Button className="w-full neu-button bg-neuyellow text-neugray hover:bg-neuyellow-light" onClick={handleLogin}>Log In</Button>
         </CardFooter>
       </Card>
     </div>

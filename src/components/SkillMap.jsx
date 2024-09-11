@@ -97,25 +97,26 @@ const SkillMap = () => {
   const masteredSkills = skills.filter(skill => skill.mastered);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Your SkillMap</h1>
+    <div className="container mx-auto p-4 bg-neugray min-h-screen text-white">
+      <h1 className="text-3xl font-bold mb-6 text-neuyellow">Your SkillMap</h1>
       
       {/* Active Skills */}
       {activeSkills.map((skill) => (
-        <Card key={skill.id} className="mb-4">
+        <Card key={skill.id} className="mb-4 neu-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold">{skill.name}</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => toggleSkill(skill.id)}
+              className="text-neuyellow hover:text-neuyellow-light"
             >
               {expandedSkill === skill.id ? <ChevronUp /> : <ChevronDown />}
             </Button>
           </CardHeader>
           <CardContent>
-            <Progress value={skill.progress} className="w-full" />
-            <p className="text-sm text-gray-500 mt-2">
+            <Progress value={skill.progress} className="w-full bg-neugray-dark" indicatorClassName="bg-neuyellow" />
+            <p className="text-sm text-gray-300 mt-2">
               Progress: {skill.progress}%
             </p>
             {expandedSkill === skill.id && (
@@ -130,7 +131,7 @@ const SkillMap = () => {
                   <>
                     <PracticeLog practiceLog={skill.practiceLog} />
                     <Button 
-                      className="mt-4" 
+                      className="mt-4 neu-button bg-neuyellow text-neugray"
                       onClick={() => markSkillMastered(skill.id)}
                     >
                       Completed Independently
@@ -145,13 +146,14 @@ const SkillMap = () => {
 
       {/* Mastered Skills */}
       {masteredSkills.length > 0 && (
-        <Card className="mb-4">
+        <Card className="mb-4 neu-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold">Mastered Skills</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">Mastered Skills</CardTitle>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMasteredExpanded(!isMasteredExpanded)}
+              className="text-neuyellow hover:text-neuyellow-light"
             >
               {isMasteredExpanded ? <ChevronUp /> : <ChevronDown />}
             </Button>
@@ -160,8 +162,8 @@ const SkillMap = () => {
             <CardContent>
               {masteredSkills.map((skill) => (
                 <div key={skill.id} className="mb-2">
-                  <h3 className="text-xl font-semibold">{skill.name}</h3>
-                  <p className="text-sm text-gray-500">Mastered</p>
+                  <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
+                  <p className="text-sm text-gray-300">Mastered</p>
                 </div>
               ))}
             </CardContent>

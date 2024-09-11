@@ -51,6 +51,16 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        neugray: {
+          light: '#2c2c2c',
+          DEFAULT: '#242424',
+          dark: '#1c1c1c',
+        },
+        neuyellow: {
+          light: '#ffeb3b',
+          DEFAULT: '#fdd835',
+          dark: '#fbc02d',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -70,6 +80,10 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      boxShadow: {
+        'neu-flat': '5px 5px 10px #1c1c1c, -5px -5px 10px #2c2c2c',
+        'neu-pressed': 'inset 5px 5px 10px #1c1c1c, inset -5px -5px 10px #2c2c2c',
       },
     },
   },
