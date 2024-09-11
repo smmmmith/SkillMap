@@ -4,18 +4,16 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
-import SkillTree from './SkillTree';
-import PracticeLog from './PracticeLog';
-import { allSkills, getInitialSkills, getAdditionalSkills } from '../utils/skillUtils';
+import SkillCard from './SkillCard';
+import MasteredSkills from './MasteredSkills';
+import AdditionalSkills from './AdditionalSkills';
+import { getInitialSkills, getAdditionalSkills } from '../utils/skillUtils';
 
 const SkillMap = () => {
   const [skills, setSkills] = useState([]);
   const [additionalSkills, setAdditionalSkills] = useState([]);
-  const [expandedSkill, setExpandedSkill] = useState(null);
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState(null);
-  const [isMasteredExpanded, setIsMasteredExpanded] = useState(false);
-  const [isAdditionalExpanded, setIsAdditionalExpanded] = useState(false);
 
   useEffect(() => {
     const selectedGoals = JSON.parse(localStorage.getItem('selectedGoals') || '[]');
@@ -23,10 +21,6 @@ const SkillMap = () => {
     setSkills(initialSkills);
     setAdditionalSkills(getAdditionalSkills(selectedGoals));
   }, []);
-
-  const toggleSkill = (skillId) => {
-    setExpandedSkill(expandedSkill === skillId ? null : skillId);
-  };
 
   const markSubSkillCompleted = (skillId, subSkillId) => {
     setSkills(skills.map(skill => {
@@ -82,54 +76,6 @@ const SkillMap = () => {
     toast.success(`${skillToAdd.name} has been added to your SkillMap!`);
   };
 
-  const renderSkillCard = (skill) => (
-    <Card key={skill.id} className="mb-4 skeuomorphic-card">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-2xl font-bold text-white">{skill.name}</CardTitle>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => toggleSkill(skill.id)}
-          className="text-neuyellow hover:text-neuyellow-light"
-        >
-          {expandedSkill === skill.id ? <ChevronUp /> : <ChevronDown />}
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <div className="skeuomorphic-progress">
-          <div
-            className="skeuomorphic-progress-bar"
-            style={{ width: `${skill.progress}%` }}
-          ></div>
-        </div>
-        <p className="text-sm text-gray-300 mt-2">
-          Progress: {skill.progress}%
-        </p>
-        {expandedSkill === skill.id && (
-          <>
-            <SkillTree
-              skill={skill}
-              markSubSkillCompleted={markSubSkillCompleted}
-              logPractice={logPractice}
-              showLearningMaterials={showLearningMaterials}
-            />
-            {skill.practiceLog.length > 0 && (
-              <>
-                <PracticeLog practiceLog={skill.practiceLog} />
-                <Button 
-                  className="mt-4 skeuomorphic-button"
-                  onClick={() => markSkillMastered(skill.id)}
-                >
-                  Completed Independently
-                </Button>
-              </>
-            )}
-          </>
-        )}
-      </CardContent>
-    </Card>
-  );
-
   const activeSkills = skills.filter(skill => !skill.mastered);
   const masteredSkills = skills.filter(skill => skill.mastered);
 
@@ -137,65 +83,20 @@ const SkillMap = () => {
     <div className="container mx-auto p-4 bg-neugray min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-6 text-white">Your SkillMap</h1>
       
-      {activeSkills.map(renderSkillCard)}
+      {activeSkills.map(skill => (
+        <SkillCard
+          key={skill.id}
+          skill={skill}
+          markSubSkillCompleted={markSubSkillCompleted}
+          logPractice={logPractice}
+          showLearningMaterials={showLearningMaterials}
+          markSkillMastered={markSkillMastered}
+        />
+      ))}
 
-      {masteredSkills.length > 0 && (
-        <Card className="mb-4 skeuomorphic-card">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold text-white">Mastered Skills</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMasteredExpanded(!isMasteredExpanded)}
-              className="text-neuyellow hover:text-neuyellow-light"
-            >
-              {isMasteredExpanded ? <ChevronUp /> : <ChevronDown />}
-            </Button>
-          </CardHeader>
-          {isMasteredExpanded && (
-            <CardContent>
-              {masteredSkills.map((skill) => (
-                <div key={skill.id} className="mb-2">
-                  <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
-                  <p className="text-sm text-gray-300">Mastered</p>
-                </div>
-              ))}
-            </CardContent>
-          )}
-        </Card>
-      )}
-
-      {additionalSkills.length > 0 && (
-        <Card className="mb-4 skeuomorphic-card">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold text-white">Additional Skills</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsAdditionalExpanded(!isAdditionalExpanded)}
-              className="text-neuyellow hover:text-neuyellow-light"
-            >
-              {isAdditionalExpanded ? <ChevronUp /> : <ChevronDown />}
-            </Button>
-          </CardHeader>
-          {isAdditionalExpanded && (
-            <CardContent>
-              {additionalSkills.map((skill) => (
-                <div key={skill.id} className="flex justify-between items-center mb-2">
-                  <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
-                  <Button 
-                    size="sm"
-                    onClick={() => addSkillToMap(skill)}
-                    className="skeuomorphic-button"
-                  >
-                    <Plus className="mr-2 h-4 w-4" /> Add to SkillMap
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          )}
-        </Card>
-      )}
+      <MasteredSkills skills={masteredSkills} />
+      
+      <AdditionalSkills skills={additionalSkills} addSkillToMap={addSkillToMap} />
 
       <PracticeLogModal
         isOpen={isLogModalOpen}
