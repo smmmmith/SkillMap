@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 
-const SkillDetails = ({ skill, markSubSkillCompleted, logPractice }) => {
+const SkillDetails = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
   const areAllSubSkillsCompleted = skill.subSkills.every(subSkill => subSkill.completed);
 
   return (
@@ -11,16 +11,25 @@ const SkillDetails = ({ skill, markSubSkillCompleted, logPractice }) => {
         {skill.subSkills.map((subSkill) => (
           <li key={subSkill.id} className="flex items-center justify-between">
             <span>{subSkill.name}</span>
-            {subSkill.completed ? (
-              <span className="text-green-500">Completed</span>
-            ) : (
+            <div className="space-x-2">
               <Button
                 size="sm"
-                onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                variant="outline"
+                onClick={() => showLearningMaterials(skill.id, subSkill.id)}
               >
-                I Already Know This
+                Learning Materials
               </Button>
-            )}
+              {subSkill.completed ? (
+                <span className="text-green-500">Completed</span>
+              ) : (
+                <Button
+                  size="sm"
+                  onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                >
+                  I Already Know This
+                </Button>
+              )}
+            </div>
           </li>
         ))}
       </ul>

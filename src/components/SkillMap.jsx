@@ -86,6 +86,13 @@ const SkillMap = () => {
     toast.success(`Congratulations! You've mastered ${skills.find(s => s.id === skillId).name}!`);
   };
 
+  const showLearningMaterials = (skillId, subSkillId) => {
+    const skill = skills.find(s => s.id === skillId);
+    const subSkill = skill.subSkills.find(ss => ss.id === subSkillId);
+    toast.info(`Showing learning materials for ${subSkill.name} in ${skill.name}`);
+    // TODO: Implement actual learning materials display logic
+  };
+
   const activeSkills = skills.filter(skill => !skill.mastered);
   const masteredSkills = skills.filter(skill => skill.mastered);
 
@@ -117,6 +124,7 @@ const SkillMap = () => {
                   skill={skill}
                   markSubSkillCompleted={markSubSkillCompleted}
                   logPractice={logPractice}
+                  showLearningMaterials={showLearningMaterials}
                 />
                 {skill.practiceLog.length > 0 && (
                   <>
