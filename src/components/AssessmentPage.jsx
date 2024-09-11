@@ -26,8 +26,7 @@ const AssessmentPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Selected goals:', selectedGoals);
-    // TODO: Send selected goals to backend
+    localStorage.setItem('selectedGoals', JSON.stringify(selectedGoals));
     navigate('/intro-to-skillmap');
   };
 

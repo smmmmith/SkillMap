@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -7,37 +7,86 @@ import PracticeLogModal from './PracticeLogModal';
 import SkillTree from './SkillTree';
 import PracticeLog from './PracticeLog';
 
+const allSkills = [
+  {
+    id: 1,
+    name: "Cooking",
+    progress: 30,
+    subSkills: [
+      { id: 11, name: "Meal Prep", completed: false },
+      { id: 12, name: "Using Appliances", completed: true },
+      { id: 13, name: "Basic Recipes", completed: false },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'cooking',
+  },
+  {
+    id: 2,
+    name: "Budgeting",
+    progress: 50,
+    subSkills: [
+      { id: 21, name: "Expense Tracking", completed: true },
+      { id: 22, name: "Creating a Budget", completed: false },
+      { id: 23, name: "Saving Strategies", completed: true },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'budgeting',
+  },
+  {
+    id: 3,
+    name: "Social Skills",
+    progress: 20,
+    subSkills: [
+      { id: 31, name: "Active Listening", completed: false },
+      { id: 32, name: "Conversation Starters", completed: false },
+      { id: 33, name: "Body Language", completed: false },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'socialSkills',
+  },
+  {
+    id: 4,
+    name: "Fitness",
+    progress: 40,
+    subSkills: [
+      { id: 41, name: "Cardio Exercises", completed: true },
+      { id: 42, name: "Strength Training", completed: false },
+      { id: 43, name: "Flexibility", completed: false },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'fitness',
+  },
+  {
+    id: 5,
+    name: "Time Management",
+    progress: 60,
+    subSkills: [
+      { id: 51, name: "Prioritization", completed: true },
+      { id: 52, name: "Task Scheduling", completed: true },
+      { id: 53, name: "Avoiding Procrastination", completed: false },
+    ],
+    practiceLog: [],
+    mastered: false,
+    goalId: 'timeManagement',
+  },
+];
+
 const SkillMap = () => {
-  const [skills, setSkills] = useState([
-    {
-      id: 1,
-      name: "Cooking",
-      progress: 30,
-      subSkills: [
-        { id: 11, name: "Meal Prep", completed: false },
-        { id: 12, name: "Using Appliances", completed: true },
-        { id: 13, name: "Basic Recipes", completed: false },
-      ],
-      practiceLog: [],
-      mastered: false,
-    },
-    {
-      id: 2,
-      name: "Budgeting",
-      progress: 50,
-      subSkills: [
-        { id: 21, name: "Expense Tracking", completed: true },
-        { id: 22, name: "Creating a Budget", completed: false },
-        { id: 23, name: "Saving Strategies", completed: true },
-      ],
-      practiceLog: [],
-      mastered: false,
-    },
-  ]);
+  const [skills, setSkills] = useState([]);
   const [expandedSkill, setExpandedSkill] = useState(null);
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState(null);
   const [isMasteredExpanded, setIsMasteredExpanded] = useState(false);
+
+  useEffect(() => {
+    const selectedGoals = JSON.parse(localStorage.getItem('selectedGoals') || '[]');
+    const filteredSkills = allSkills.filter(skill => selectedGoals.includes(skill.goalId));
+    setSkills(filteredSkills);
+  }, []);
 
   const toggleSkill = (skillId) => {
     setExpandedSkill(expandedSkill === skillId ? null : skillId);
