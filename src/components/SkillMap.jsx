@@ -52,9 +52,7 @@ const SkillMap = () => {
   };
 
   const logPractice = (skillId) => {
-    // This is a placeholder for the practice logging functionality
     console.log(`Logging practice for skill ${skillId}`);
-    // Here you would typically open a modal or navigate to a new page for logging practice
   };
 
   return (
@@ -89,7 +87,7 @@ const SkillMap = () => {
                           size="sm"
                           onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
                         >
-                          Mark Completed
+                          I Already Know This
                         </Button>
                       )}
                     </li>
