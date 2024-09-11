@@ -17,6 +17,7 @@ const SkillDetails = ({ skill, markSubSkillCompleted, logPractice, showLearningM
                   size="sm"
                   variant="outline"
                   onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+                  className="skeuomorphic-button-dark"
                 >
                   Learning Materials
                 </Button>
@@ -27,6 +28,7 @@ const SkillDetails = ({ skill, markSubSkillCompleted, logPractice, showLearningM
                 <Button
                   size="sm"
                   onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                  className="skeuomorphic-button"
                 >
                   I Already Know This
                 </Button>
@@ -36,7 +38,7 @@ const SkillDetails = ({ skill, markSubSkillCompleted, logPractice, showLearningM
         ))}
       </ul>
       <Button 
-        className="mt-4" 
+        className="mt-4 skeuomorphic-button" 
         onClick={() => logPractice(skill)}
         disabled={!areAllSubSkillsCompleted}
       >

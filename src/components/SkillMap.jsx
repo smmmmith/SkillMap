@@ -97,7 +97,7 @@ const SkillMap = () => {
 
   return (
     <div className="container mx-auto p-4 bg-neugray min-h-screen text-white">
-      <h1 className="text-3xl font-bold mb-6 text-neuyellow">Your SkillMap</h1>
+      <h1 className="text-3xl font-bold mb-6 text-white">Your SkillMap</h1>
       
       {/* Active Skills */}
       {activeSkills.map((skill) => (
