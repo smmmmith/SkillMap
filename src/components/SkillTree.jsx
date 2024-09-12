@@ -60,11 +60,11 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     if (!level || !level.subSkills) return null;
 
     return (
-      <div className="flex flex-wrap justify-center items-start space-x-4 py-2">
+      <div className="flex flex-wrap justify-center items-start space-x-4 py-4">
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
-              className="flex flex-col items-center relative mb-4"
+              className="flex flex-col items-center relative mb-8"
               onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
@@ -100,13 +100,13 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
             <h3 className="font-semibold text-neuyellow">{skill.name}</h3>
           </CardContent>
         </Card>
-        <div className="w-px h-4 bg-neuyellow"></div>
+        <div className="w-px h-8 bg-neuyellow"></div>
         <div className="relative w-full">
           {renderSubSkills(skill.levels[0], currentLevel > 0)}
         </div>
       </div>
       {areAllSubSkillsCompleted(skill.levels[0]) && !isLastLevel && (
-        <div className="mt-2 text-center space-x-4">
+        <div className="mt-4 text-center space-x-4">
           <Button 
             className="skeuomorphic-button" 
             onClick={() => logPractice(skill)}
@@ -122,7 +122,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         </div>
       )}
       {isLastLevel && areAllSubSkillsCompleted(skill.levels[currentLevel]) && (
-        <div className="mt-2 text-center">
+        <div className="mt-4 text-center">
           <Button 
             className="skeuomorphic-button" 
             onClick={() => logPractice(skill)}
@@ -132,8 +132,8 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         </div>
       )}
       {currentLevel > 0 && (
-        <div className="mt-2">
-          <div className="w-px h-4 bg-neuyellow mx-auto"></div>
+        <div className="mt-4">
+          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
