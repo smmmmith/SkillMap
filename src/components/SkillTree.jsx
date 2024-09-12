@@ -59,15 +59,18 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     </div>
   );
 
-  const renderSubSkills = (level, isCompleted = false) => {
+  const renderSubSkills = (level, isCompleted = false, levelIndex) => {
     if (!level || !level.subSkills) return null;
 
+    const allCompleted = areAllSubSkillsCompleted(level);
+    const marginClass = allCompleted ? 'mb-4' : 'mb-16';
+
     return (
-      <div className="flex flex-wrap justify-center items-start space-x-4 py-4">
+      <div className={`flex flex-wrap justify-center items-start space-x-4 py-4 ${marginClass}`}>
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
-              className={`flex flex-col items-center relative ${isLevelTwoVisible ? 'mb-4' : 'mb-16'}`}
+              className={`flex flex-col items-center relative`}
               onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
@@ -104,11 +107,18 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className={`w-px ${isLevelTwoVisible ? 'h-4' : 'h-8'} bg-neuyellow`}></div>
-        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-4' : ''}`}>
-          {renderSubSkills(skill.levels[0], currentLevel > 0)}
+        <div className="relative w-full">
+          {skill.levels.map((level, index) => (
+            <React.Fragment key={index}>
+              {renderSubSkills(level, index < currentLevel, index)}
+              {index < skill.levels.length - 1 && index <= currentLevel && (
+                <div className="w-px h-8 bg-neuyellow mx-auto my-2"></div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </div>
-      {areAllSubSkillsCompleted(skill.levels[0]) && !isLastLevel && (
+      {areAllSubSkillsCompleted(skill.levels[currentLevel]) && !isLastLevel && (
         <div className="mt-4 text-center space-x-4">
           <Button 
             className="skeuomorphic-button" 
@@ -132,14 +142,6 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           >
             Log Practice
           </Button>
-        </div>
-      )}
-      {currentLevel > 0 && (
-        <div className="mt-4">
-          <div className="w-px h-4 bg-neuyellow mx-auto"></div>
-          <div className="relative w-full">
-            {renderSubSkills(skill.levels[currentLevel])}
-          </div>
         </div>
       )}
       <NotReadyDialog 
