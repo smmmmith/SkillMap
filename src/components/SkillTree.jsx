@@ -126,6 +126,12 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           >
             Log Practice
           </Button>
+          <Button 
+            className="skeuomorphic-button-dark" 
+            onClick={() => markSkillMastered(skill.id)}
+          >
+            Completed Independently
+          </Button>
           {!isLastLevel && (
             <Button 
               className="skeuomorphic-button-dark" 
