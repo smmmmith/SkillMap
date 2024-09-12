@@ -24,8 +24,8 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
 
   const FloatingButtons = ({ subSkill }) => (
     <div 
-      className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" 
-      style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)', top: '100%' }}
+      className="absolute z-10 bg-neugray-dark rounded-md shadow-lg p-2" 
+      style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%) translateY(-100%)', bottom: '0' }}
     >
       <Button
         size="sm"
