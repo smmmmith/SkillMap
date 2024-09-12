@@ -44,7 +44,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         }}
         className="skeuomorphic-button-dark text-xs mb-2 w-full"
       >
-        Learn
+        Learning Materials
       </Button>
       <Button
         size="sm"
@@ -54,7 +54,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         }}
         className="skeuomorphic-button text-xs w-full"
       >
-        Complete
+        Already Know This
       </Button>
     </div>
   );
