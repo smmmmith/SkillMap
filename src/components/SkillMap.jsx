@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { toast } from "sonner";
 import PracticeLogModal from './PracticeLogModal';
 import SkillCard from './SkillCard';
 import MasteredSkills from './MasteredSkills';
 import AdditionalSkills from './AdditionalSkills';
-import { calculateSkillProgress } from '../utils/skillUtils';
-import { useSkills, useUpdateSkill } from '../integrations/supabase/hooks/skillHooks';
+import { getInitialSkills, getAdditionalSkills, calculateSkillProgress } from '../utils/skillUtils';
 
 const SkillMap = () => {
+  const [skills, setSkills] = useState([]);
+  const [additionalSkills, setAdditionalSkills] = useState([]);
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState(null);
-  const { data: skills, isLoading, error } = useSkills();
-  const updateSkillMutation = useUpdateSkill();
 
-  if (isLoading) return <div>Loading skills...</div>;
-  if (error) return <div>Error loading skills: {error.message}</div>;
-
-  const activeSkills = skills?.filter(skill => !skill.mastered) || [];
-  const masteredSkills = skills?.filter(skill => skill.mastered) || [];
+  useEffect(() => {
+    const selectedGoals = JSON.parse(localStorage.getItem('selectedGoals') || '[]');
+    const initialSkills = getInitialSkills(selectedGoals);
+    setSkills(initialSkills);
+    setAdditionalSkills(getAdditionalSkills(selectedGoals));
+  }, []);
 
   const markSubSkillCompleted = (skillId, subSkillId) => {
-    const updatedSkill = skills.find(skill => skill.id === skillId);
-    if (!updatedSkill) return;
-
-    const updatedLevels = updatedSkill.levels.map(level => ({
-      ...level,
-      subSkills: level.subSkills.map(subSkill =>
-        subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
-      )
+    setSkills(skills.map(skill => {
+      if (skill.id === skillId) {
+        const updatedLevels = skill.levels.map(level => ({
+          ...level,
+          subSkills: level.subSkills.map(subSkill =>
+            subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
+          )
+        }));
+        const newProgress = calculateSkillProgress({ ...skill, levels: updatedLevels });
+        return { ...skill, levels: updatedLevels, progress: newProgress };
+      }
+      return skill;
     }));
-
-    const newProgress = calculateSkillProgress({ ...updatedSkill, levels: updatedLevels });
-    updateSkillMutation.mutate({ id: skillId, levels: updatedLevels, progress: newProgress });
   };
 
   const logPractice = (skill) => {
@@ -40,23 +44,25 @@ const SkillMap = () => {
   };
 
   const handleLogSubmit = (supportLevel, successRating) => {
-    if (!currentSkill) return;
-
-    const updatedPracticeLog = [
-      ...(currentSkill.practiceLog || []),
-      { date: new Date(), supportLevel, successRating }
-    ];
-
-    updateSkillMutation.mutate({ 
-      id: currentSkill.id, 
-      practiceLog: updatedPracticeLog 
-    });
-
+    setSkills(skills.map(skill => {
+      if (skill.id === currentSkill.id) {
+        return {
+          ...skill,
+          practiceLog: [
+            ...skill.practiceLog,
+            { date: new Date(), supportLevel, successRating }
+          ]
+        };
+      }
+      return skill;
+    }));
     setIsLogModalOpen(false);
   };
 
   const markSkillMastered = (skillId) => {
-    updateSkillMutation.mutate({ id: skillId, mastered: true, progress: 100 });
+    setSkills(skills.map(skill => 
+      skill.id === skillId ? { ...skill, mastered: true, progress: 100 } : skill
+    ));
     const masteredSkill = skills.find(s => s.id === skillId);
     if (masteredSkill) {
       toast.success(`Congratulations! You've mastered ${masteredSkill.name}!`);
@@ -77,6 +83,15 @@ const SkillMap = () => {
     }
   };
 
+  const addSkillToMap = (skillToAdd) => {
+    setSkills([...skills, skillToAdd]);
+    setAdditionalSkills(additionalSkills.filter(skill => skill.id !== skillToAdd.id));
+    toast.success(`${skillToAdd.name} has been added to your SkillMap!`);
+  };
+
+  const activeSkills = skills.filter(skill => !skill.mastered);
+  const masteredSkills = skills.filter(skill => skill.mastered);
+
   return (
     <div className="container mx-auto p-4 bg-appbg min-h-screen text-white">
       <h1 className="text-3xl font-bold mb-6 text-white">Your SkillMap</h1>
@@ -93,6 +108,8 @@ const SkillMap = () => {
       ))}
 
       <MasteredSkills skills={masteredSkills} />
+      
+      <AdditionalSkills skills={additionalSkills} addSkillToMap={addSkillToMap} />
 
       <PracticeLogModal
         isOpen={isLogModalOpen}
