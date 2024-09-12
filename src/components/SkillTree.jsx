@@ -23,7 +23,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
   const FloatingButtons = ({ subSkill }) => (
-    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px' }}>
+    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)' }}>
       <Button
         size="sm"
         variant="outline"
@@ -93,7 +93,9 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
-        {renderSubSkills(skill.levels[currentLevel])}
+        <div className="relative pb-20">
+          {renderSubSkills(skill.levels[currentLevel])}
+        </div>
       </div>
       {areAllSubSkillsCompleted(skill.levels[currentLevel]) && !isLastLevel && (
         <div className="mt-4 text-center space-x-4">
@@ -125,7 +127,9 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         <div className="mt-8">
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
-          {renderSubSkills(skill.levels[currentLevel])}
+          <div className="relative pb-20">
+            {renderSubSkills(skill.levels[currentLevel])}
+          </div>
         </div>
       )}
       <NotReadyDialog 
