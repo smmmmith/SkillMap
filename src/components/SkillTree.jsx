@@ -6,19 +6,21 @@ import NotReadyDialog from './NotReadyDialog';
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
   const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
-  const [showLevel2SubSkills, setShowLevel2SubSkills] = useState(false);
-
-  const allLevel1SubSkillsCompleted = skill.subSkills.every(subSkill => subSkill.completed);
-  const allLevel2SubSkillsCompleted = skill.level2SubSkills && skill.level2SubSkills.every(subSkill => subSkill.completed);
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const handleNotReadyClick = () => {
     setIsNotReadyDialogOpen(true);
-    setShowLevel2SubSkills(true);
+    if (currentLevel < skill.levels.length - 1) {
+      setCurrentLevel(currentLevel + 1);
+    }
   };
 
-  const renderSubSkills = (subSkills, isLevel2 = false) => (
+  const areAllSubSkillsCompleted = (level) => level.subSkills.every(subSkill => subSkill.completed);
+  const isLastLevel = currentLevel === skill.levels.length - 1;
+
+  const renderSubSkills = (level) => (
     <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
-      {subSkills.map((subSkill, index) => (
+      {level.subSkills.map((subSkill, index) => (
         <React.Fragment key={subSkill.id}>
           <div className="flex flex-col items-center">
             <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
@@ -48,7 +50,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
               )}
             </div>
           </div>
-          {index < subSkills.length - 1 && (
+          {index < level.subSkills.length - 1 && (
             <ArrowRight className="text-neuyellow" size={24} />
           )}
         </React.Fragment>
@@ -65,9 +67,9 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
-        {renderSubSkills(skill.subSkills)}
+        {renderSubSkills(skill.levels[currentLevel])}
       </div>
-      {skill.name === "Using Uber" && allLevel1SubSkillsCompleted && !showLevel2SubSkills && (
+      {areAllSubSkillsCompleted(skill.levels[currentLevel]) && !isLastLevel && (
         <div className="mt-4 text-center space-x-4">
           <Button 
             className="skeuomorphic-button" 
@@ -83,21 +85,21 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </Button>
         </div>
       )}
-      {skill.name === "Using Uber" && showLevel2SubSkills && (
-        <div className="mt-8">
-          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
-          <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
-          {skill.level2SubSkills && renderSubSkills(skill.level2SubSkills, true)}
-        </div>
-      )}
-      {skill.name === "Using Uber" && showLevel2SubSkills && allLevel2SubSkillsCompleted && (
-        <div className="mt-4 text-center space-x-4">
+      {isLastLevel && areAllSubSkillsCompleted(skill.levels[currentLevel]) && (
+        <div className="mt-4 text-center">
           <Button 
             className="skeuomorphic-button" 
             onClick={() => logPractice(skill)}
           >
             Log Practice
           </Button>
+        </div>
+      )}
+      {currentLevel > 0 && (
+        <div className="mt-8">
+          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
+          <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
+          {renderSubSkills(skill.levels[currentLevel])}
         </div>
       )}
       <NotReadyDialog 

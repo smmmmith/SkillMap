@@ -7,7 +7,7 @@ import PracticeLogModal from './PracticeLogModal';
 import SkillCard from './SkillCard';
 import MasteredSkills from './MasteredSkills';
 import AdditionalSkills from './AdditionalSkills';
-import { getInitialSkills, getAdditionalSkills } from '../utils/skillUtils';
+import { getInitialSkills, getAdditionalSkills, calculateSkillProgress } from '../utils/skillUtils';
 
 const SkillMap = () => {
   const [skills, setSkills] = useState([]);
@@ -25,21 +25,14 @@ const SkillMap = () => {
   const markSubSkillCompleted = (skillId, subSkillId) => {
     setSkills(skills.map(skill => {
       if (skill.id === skillId) {
-        const updatedSubSkills = skill.subSkills.map(subSkill => 
-          subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
-        );
-        const updatedLevel2SubSkills = skill.level2SubSkills ? skill.level2SubSkills.map(subSkill =>
-          subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
-        ) : null;
-        const allSubSkills = [...updatedSubSkills, ...(updatedLevel2SubSkills || [])];
-        const completedCount = allSubSkills.filter(subSkill => subSkill.completed).length;
-        const newProgress = Math.round((completedCount / allSubSkills.length) * 100);
-        return { 
-          ...skill, 
-          subSkills: updatedSubSkills, 
-          level2SubSkills: updatedLevel2SubSkills,
-          progress: newProgress 
-        };
+        const updatedLevels = skill.levels.map(level => ({
+          ...level,
+          subSkills: level.subSkills.map(subSkill =>
+            subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
+          )
+        }));
+        const newProgress = calculateSkillProgress({ ...skill, levels: updatedLevels });
+        return { ...skill, levels: updatedLevels, progress: newProgress };
       }
       return skill;
     }));
@@ -79,8 +72,7 @@ const SkillMap = () => {
   const showLearningMaterials = (skillId, subSkillId) => {
     const skill = skills.find(s => s.id === skillId);
     if (skill) {
-      const subSkill = skill.subSkills.find(ss => ss.id === subSkillId) || 
-                       (skill.level2SubSkills && skill.level2SubSkills.find(ss => ss.id === subSkillId));
+      const subSkill = skill.levels.flatMap(level => level.subSkills).find(ss => ss.id === subSkillId);
       if (subSkill) {
         toast.info(`Showing learning materials for ${subSkill.name} in ${skill.name}`);
       } else {
