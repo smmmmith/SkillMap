@@ -42,20 +42,12 @@ const SkillCard = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
             {skill.practiceLog.length > 0 && (
               <>
                 <PracticeLog practiceLog={skill.practiceLog} />
-                <div className="flex justify-between items-center mt-4">
-                  <Button 
-                    className="skeuomorphic-button"
-                    onClick={() => logPractice(skill)}
-                  >
-                    Log Practice
-                  </Button>
-                  <Button 
-                    className="skeuomorphic-button"
-                    onClick={() => markSkillMastered(skill.id)}
-                  >
-                    Completed Independently
-                  </Button>
-                </div>
+                <Button 
+                  className="mt-4 skeuomorphic-button"
+                  onClick={() => markSkillMastered(skill.id)}
+                >
+                  Completed Independently
+                </Button>
               </>
             )}
           </>
