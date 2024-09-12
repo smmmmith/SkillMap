@@ -52,7 +52,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     if (!level || !level.subSkills) return null;
 
     return (
-      <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
+      <div className="flex justify-center items-center space-x-4 py-4">
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
@@ -85,7 +85,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   }
 
   return (
-    <div className="mt-4 pb-20">
+    <div className="mt-4 pb-40">
       <div className="flex flex-col items-center">
         <Card className="w-40 mb-4 skeuomorphic-card">
           <CardContent className="p-4 text-center">
