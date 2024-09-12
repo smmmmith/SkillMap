@@ -104,7 +104,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className={`w-px ${isLevelTwoVisible ? 'h-4' : 'h-8'} bg-neuyellow`}></div>
-        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-4' : 'mb-16'}`}>
+        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-4' : ''}`}>
           {renderSubSkills(skill.levels[0], currentLevel > 0)}
         </div>
       </div>
@@ -137,7 +137,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
       {currentLevel > 0 && (
         <div className="mt-4">
           <div className="w-px h-4 bg-neuyellow mx-auto"></div>
-          <div className="relative w-full mb-16">
+          <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
         </div>
