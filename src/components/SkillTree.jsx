@@ -23,7 +23,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
   const FloatingButtons = ({ subSkill }) => (
-    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)' }}>
+    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)', top: '100%' }}>
       <Button
         size="sm"
         variant="outline"
@@ -85,7 +85,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   }
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 pb-20">
       <div className="flex flex-col items-center">
         <Card className="w-40 mb-4 skeuomorphic-card">
           <CardContent className="p-4 text-center">
@@ -93,7 +93,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
-        <div className="relative pb-20">
+        <div className="relative">
           {renderSubSkills(skill.levels[currentLevel])}
         </div>
       </div>
@@ -127,7 +127,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         <div className="mt-8">
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
-          <div className="relative pb-20">
+          <div className="relative">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
         </div>
