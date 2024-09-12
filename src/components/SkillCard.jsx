@@ -38,17 +38,10 @@ const SkillCard = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
               markSubSkillCompleted={markSubSkillCompleted}
               logPractice={logPractice}
               showLearningMaterials={showLearningMaterials}
+              markSkillMastered={markSkillMastered}
             />
             {skill.practiceLog.length > 0 && (
-              <>
-                <PracticeLog practiceLog={skill.practiceLog} />
-                <Button 
-                  className="mt-4 skeuomorphic-button"
-                  onClick={() => markSkillMastered(skill.id)}
-                >
-                  Completed Independently
-                </Button>
-              </>
+              <PracticeLog practiceLog={skill.practiceLog} />
             )}
           </>
         )}
