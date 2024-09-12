@@ -26,8 +26,6 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     <div 
       className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" 
       style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)', top: '100%' }}
-      onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
-      onMouseLeave={() => setHoveredSubSkill(null)}
     >
       <Button
         size="sm"
@@ -57,11 +55,11 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     if (!level || !level.subSkills) return null;
 
     return (
-      <div className="flex justify-center items-center space-x-4 py-4">
+      <div className="flex flex-wrap justify-center items-start space-x-4 py-4">
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
-              className="flex flex-col items-center relative"
+              className="flex flex-col items-center relative mb-16"
               onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
@@ -77,7 +75,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
               )}
             </div>
             {index < level.subSkills.length - 1 && (
-              <ArrowRight className="text-neuyellow" size={24} />
+              <ArrowRight className="text-neuyellow mt-4" size={24} />
             )}
           </React.Fragment>
         ))}
@@ -98,7 +96,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
-        <div className="relative">
+        <div className="relative w-full">
           {renderSubSkills(skill.levels[currentLevel])}
         </div>
       </div>
@@ -132,7 +130,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         <div className="mt-8">
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
-          <div className="relative">
+          <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
         </div>
