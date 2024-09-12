@@ -8,11 +8,13 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [hoveredSubSkill, setHoveredSubSkill] = useState(null);
+  const [isLevelTwoVisible, setIsLevelTwoVisible] = useState(false);
 
   const handleNotReadyClick = () => {
     setIsNotReadyDialogOpen(true);
     if (skill.levels && currentLevel < skill.levels.length - 1) {
       setCurrentLevel(currentLevel + 1);
+      setIsLevelTwoVisible(true);
     }
   };
 
@@ -102,7 +104,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </CardContent>
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
-        <div className="relative w-full">
+        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-16' : ''}`}>
           {renderSubSkills(skill.levels[0], currentLevel > 0)}
         </div>
       </div>
@@ -133,9 +135,8 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         </div>
       )}
       {currentLevel > 0 && (
-        <div className="mt-8">
+        <div className="mt-4">
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
-          <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
           <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
