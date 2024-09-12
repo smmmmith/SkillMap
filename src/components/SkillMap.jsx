@@ -28,9 +28,18 @@ const SkillMap = () => {
         const updatedSubSkills = skill.subSkills.map(subSkill => 
           subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
         );
-        const completedCount = updatedSubSkills.filter(subSkill => subSkill.completed).length;
-        const newProgress = Math.round((completedCount / skill.subSkills.length) * 100);
-        return { ...skill, subSkills: updatedSubSkills, progress: newProgress };
+        const updatedLevel2SubSkills = skill.level2SubSkills ? skill.level2SubSkills.map(subSkill =>
+          subSkill.id === subSkillId ? { ...subSkill, completed: true } : subSkill
+        ) : null;
+        const allSubSkills = [...updatedSubSkills, ...(updatedLevel2SubSkills || [])];
+        const completedCount = allSubSkills.filter(subSkill => subSkill.completed).length;
+        const newProgress = Math.round((completedCount / allSubSkills.length) * 100);
+        return { 
+          ...skill, 
+          subSkills: updatedSubSkills, 
+          level2SubSkills: updatedLevel2SubSkills,
+          progress: newProgress 
+        };
       }
       return skill;
     }));
