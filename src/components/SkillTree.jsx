@@ -30,7 +30,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         left: '50%', 
         transform: 'translateX(-50%)', 
         top: '100%',
-        marginTop: '2px'
+        marginTop: '0px'
       }}
     >
       <Button
@@ -57,7 +57,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
     </div>
   );
 
-  const renderSubSkills = (level) => {
+  const renderSubSkills = (level, isCompleted = false) => {
     if (!level || !level.subSkills) return null;
 
     return (
@@ -70,13 +70,13 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
               <Card 
-                className={`w-32 mb-2 cursor-pointer ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}
+                className={`w-32 mb-2 cursor-pointer ${subSkill.completed || isCompleted ? 'bg-neuyellow' : 'skeuomorphic-card'}`}
               >
                 <CardContent className="p-2 text-center">
-                  <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
+                  <p className={`text-sm ${subSkill.completed || isCompleted ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
                 </CardContent>
               </Card>
-              {hoveredSubSkill === subSkill.id && !subSkill.completed && (
+              {hoveredSubSkill === subSkill.id && !subSkill.completed && !isCompleted && (
                 <FloatingButtons subSkill={subSkill} />
               )}
             </div>
@@ -103,10 +103,10 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         </Card>
         <div className="w-px h-8 bg-neuyellow"></div>
         <div className="relative w-full">
-          {renderSubSkills(skill.levels[currentLevel])}
+          {renderSubSkills(skill.levels[0], currentLevel > 0)}
         </div>
       </div>
-      {areAllSubSkillsCompleted(skill.levels[currentLevel]) && !isLastLevel && (
+      {areAllSubSkillsCompleted(skill.levels[0]) && !isLastLevel && (
         <div className="mt-4 text-center space-x-4">
           <Button 
             className="skeuomorphic-button" 
