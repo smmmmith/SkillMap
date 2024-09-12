@@ -7,7 +7,7 @@ import NotReadyDialog from './NotReadyDialog';
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
   const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
-  const [selectedSubSkill, setSelectedSubSkill] = useState(null);
+  const [hoveredSubSkill, setHoveredSubSkill] = useState(null);
 
   const handleNotReadyClick = () => {
     setIsNotReadyDialogOpen(true);
@@ -22,10 +22,6 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
 
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
-  const handleSubSkillClick = (subSkillId) => {
-    setSelectedSubSkill(selectedSubSkill === subSkillId ? null : subSkillId);
-  };
-
   const renderSubSkills = (level) => {
     if (!level || !level.subSkills) return null;
 
@@ -36,13 +32,14 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
             <div className="flex flex-col items-center">
               <Card 
                 className={`w-32 mb-2 cursor-pointer ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}
-                onClick={() => handleSubSkillClick(subSkill.id)}
+                onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
+                onMouseLeave={() => setHoveredSubSkill(null)}
               >
                 <CardContent className="p-2 text-center">
                   <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
                 </CardContent>
               </Card>
-              {selectedSubSkill === subSkill.id && !subSkill.completed && (
+              {hoveredSubSkill === subSkill.id && !subSkill.completed && (
                 <div className="flex flex-col space-y-2 mt-2">
                   <Button
                     size="sm"
