@@ -22,6 +22,26 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
 
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
+  const FloatingButtons = ({ subSkill }) => (
+    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2">
+      <Button
+        size="sm"
+        variant="outline"
+        onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+        className="skeuomorphic-button-dark text-xs mb-2 w-full"
+      >
+        Learn
+      </Button>
+      <Button
+        size="sm"
+        onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+        className="skeuomorphic-button text-xs w-full"
+      >
+        Complete
+      </Button>
+    </div>
+  );
+
   const renderSubSkills = (level) => {
     if (!level || !level.subSkills) return null;
 
@@ -29,7 +49,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
       <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center relative">
               <Card 
                 className={`w-32 mb-2 cursor-pointer ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}
                 onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
@@ -40,23 +60,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
                 </CardContent>
               </Card>
               {hoveredSubSkill === subSkill.id && !subSkill.completed && (
-                <div className="flex flex-col space-y-2 mt-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => showLearningMaterials(skill.id, subSkill.id)}
-                    className="skeuomorphic-button-dark text-xs"
-                  >
-                    Learn
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
-                    className="skeuomorphic-button text-xs"
-                  >
-                    Complete
-                  </Button>
-                </div>
+                <FloatingButtons subSkill={subSkill} />
               )}
             </div>
             {index < level.subSkills.length - 1 && (
