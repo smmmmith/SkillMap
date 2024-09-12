@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import NotReadyDialog from './NotReadyDialog';
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
@@ -67,7 +67,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
-              className="flex flex-col items-center relative mb-16"
+              className={`flex flex-col items-center relative ${isLevelTwoVisible ? 'mb-4' : 'mb-16'}`}
               onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
@@ -103,8 +103,8 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
             <h3 className="font-semibold text-neuyellow">{skill.name}</h3>
           </CardContent>
         </Card>
-        <div className="w-px h-8 bg-neuyellow"></div>
-        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-16' : ''}`}>
+        <div className={`w-px ${isLevelTwoVisible ? 'h-4' : 'h-8'} bg-neuyellow`}></div>
+        <div className={`relative w-full ${isLevelTwoVisible ? 'mb-4' : ''}`}>
           {renderSubSkills(skill.levels[0], currentLevel > 0)}
         </div>
       </div>
@@ -136,7 +136,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
       )}
       {currentLevel > 0 && (
         <div className="mt-4">
-          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
+          <div className="w-px h-4 bg-neuyellow mx-auto"></div>
           <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
