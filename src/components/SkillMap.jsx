@@ -61,13 +61,25 @@ const SkillMap = () => {
     setSkills(skills.map(skill => 
       skill.id === skillId ? { ...skill, mastered: true, progress: 100 } : skill
     ));
-    toast.success(`Congratulations! You've mastered ${skills.find(s => s.id === skillId).name}!`);
+    const masteredSkill = skills.find(s => s.id === skillId);
+    if (masteredSkill) {
+      toast.success(`Congratulations! You've mastered ${masteredSkill.name}!`);
+    }
   };
 
   const showLearningMaterials = (skillId, subSkillId) => {
     const skill = skills.find(s => s.id === skillId);
-    const subSkill = skill.subSkills.find(ss => ss.id === subSkillId);
-    toast.info(`Showing learning materials for ${subSkill.name} in ${skill.name}`);
+    if (skill) {
+      const subSkill = skill.subSkills.find(ss => ss.id === subSkillId) || 
+                       (skill.level2SubSkills && skill.level2SubSkills.find(ss => ss.id === subSkillId));
+      if (subSkill) {
+        toast.info(`Showing learning materials for ${subSkill.name} in ${skill.name}`);
+      } else {
+        toast.error("Sub-skill not found");
+      }
+    } else {
+      toast.error("Skill not found");
+    }
   };
 
   const addSkillToMap = (skillToAdd) => {

@@ -87,7 +87,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         <div className="mt-8">
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
-          {renderSubSkills(skill.level2SubSkills, true)}
+          {skill.level2SubSkills && renderSubSkills(skill.level2SubSkills, true)}
         </div>
       )}
       {skill.name === "Using Uber" && showLevel2SubSkills && allLevel2SubSkillsCompleted && (
