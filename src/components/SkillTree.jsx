@@ -10,53 +10,64 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
 
   const handleNotReadyClick = () => {
     setIsNotReadyDialogOpen(true);
-    if (currentLevel < skill.levels.length - 1) {
+    if (skill.levels && currentLevel < skill.levels.length - 1) {
       setCurrentLevel(currentLevel + 1);
     }
   };
 
-  const areAllSubSkillsCompleted = (level) => level.subSkills.every(subSkill => subSkill.completed);
-  const isLastLevel = currentLevel === skill.levels.length - 1;
+  const areAllSubSkillsCompleted = (level) => {
+    return level && level.subSkills && level.subSkills.every(subSkill => subSkill.completed);
+  };
 
-  const renderSubSkills = (level) => (
-    <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
-      {level.subSkills.map((subSkill, index) => (
-        <React.Fragment key={subSkill.id}>
-          <div className="flex flex-col items-center">
-            <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
-              <CardContent className="p-2 text-center">
-                <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
-              </CardContent>
-            </Card>
-            <div className="flex flex-col space-y-2">
-              {!subSkill.completed && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => showLearningMaterials(skill.id, subSkill.id)}
-                  className="skeuomorphic-button-dark text-xs"
-                >
-                  Learn
-                </Button>
-              )}
-              {!subSkill.completed && (
-                <Button
-                  size="sm"
-                  onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
-                  className="skeuomorphic-button text-xs"
-                >
-                  Complete
-                </Button>
-              )}
+  const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
+
+  const renderSubSkills = (level) => {
+    if (!level || !level.subSkills) return null;
+
+    return (
+      <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
+        {level.subSkills.map((subSkill, index) => (
+          <React.Fragment key={subSkill.id}>
+            <div className="flex flex-col items-center">
+              <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
+                <CardContent className="p-2 text-center">
+                  <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
+                </CardContent>
+              </Card>
+              <div className="flex flex-col space-y-2">
+                {!subSkill.completed && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+                    className="skeuomorphic-button-dark text-xs"
+                  >
+                    Learn
+                  </Button>
+                )}
+                {!subSkill.completed && (
+                  <Button
+                    size="sm"
+                    onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                    className="skeuomorphic-button text-xs"
+                  >
+                    Complete
+                  </Button>
+                )}
+              </div>
             </div>
-          </div>
-          {index < level.subSkills.length - 1 && (
-            <ArrowRight className="text-neuyellow" size={24} />
-          )}
-        </React.Fragment>
-      ))}
-    </div>
-  );
+            {index < level.subSkills.length - 1 && (
+              <ArrowRight className="text-neuyellow" size={24} />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  };
+
+  if (!skill || !skill.levels || skill.levels.length === 0) {
+    return <div>No skill data available</div>;
+  }
 
   return (
     <div className="mt-4">
