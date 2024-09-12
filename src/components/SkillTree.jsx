@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowDown } from "lucide-react";
 import NotReadyDialog from './NotReadyDialog';
 
 const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
@@ -81,7 +80,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
               )}
             </div>
             {index < level.subSkills.length - 1 && (
-              <ArrowRight className="text-neuyellow mt-4" size={24} />
+              <div className="text-neuyellow mt-4">→</div>
             )}
           </React.Fragment>
         ))}
@@ -134,7 +133,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
       )}
       {currentLevel > 0 && (
         <div className="mt-4">
-          <ArrowDown className="text-neuyellow mx-auto mb-2" size={24} />
+          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
