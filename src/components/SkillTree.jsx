@@ -23,7 +23,12 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
   const FloatingButtons = ({ subSkill }) => (
-    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)', top: '100%' }}>
+    <div 
+      className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" 
+      style={{ minWidth: '120px', left: '50%', transform: 'translateX(-50%)', top: '100%' }}
+      onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
+      onMouseLeave={() => setHoveredSubSkill(null)}
+    >
       <Button
         size="sm"
         variant="outline"
@@ -85,7 +90,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   }
 
   return (
-    <div className="mt-4 pb-40">
+    <div className="mt-4">
       <div className="flex flex-col items-center">
         <Card className="w-40 mb-4 skeuomorphic-card">
           <CardContent className="p-4 text-center">
