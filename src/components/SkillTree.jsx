@@ -30,7 +30,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         left: '50%', 
         transform: 'translateX(-50%)', 
         top: '100%',
-        marginTop: '0px'
+        marginTop: '4px'
       }}
     >
       <Button
@@ -65,7 +65,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
             <div 
-              className="flex flex-col items-center relative mb-16"
+              className="flex flex-col items-center relative mb-8"
               onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
               onMouseLeave={() => setHoveredSubSkill(null)}
             >
@@ -133,9 +133,8 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
         </div>
       )}
       {currentLevel > 0 && (
-        <div className="mt-8">
-          <div className="w-px h-8 bg-neuyellow mx-auto"></div>
-          <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
+        <div className="mt-4">
+          <ArrowDown className="text-neuyellow mx-auto mb-2" size={24} />
           <div className="relative w-full">
             {renderSubSkills(skill.levels[currentLevel])}
           </div>
