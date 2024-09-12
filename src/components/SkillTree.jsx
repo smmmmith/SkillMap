@@ -82,35 +82,40 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           <div className="w-px h-8 bg-neuyellow mx-auto"></div>
           <ArrowDown className="text-neuyellow mx-auto mb-4" size={24} />
           <div className="flex flex-wrap justify-center gap-4">
-            {skill.level2SubSkills.map((subSkill) => (
-              <div key={subSkill.id} className="flex flex-col items-center">
-                <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
-                  <CardContent className="p-2 text-center">
-                    <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
-                  </CardContent>
-                </Card>
-                <div className="flex flex-col space-y-2">
-                  {!subSkill.completed && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => showLearningMaterials(skill.id, subSkill.id)}
-                      className="skeuomorphic-button-dark text-xs"
-                    >
-                      Learn
-                    </Button>
-                  )}
-                  {!subSkill.completed && (
-                    <Button
-                      size="sm"
-                      onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
-                      className="skeuomorphic-button text-xs"
-                    >
-                      Complete
-                    </Button>
-                  )}
+            {skill.level2SubSkills.map((subSkill, index) => (
+              <React.Fragment key={subSkill.id}>
+                <div className="flex flex-col items-center">
+                  <Card className={`w-32 mb-2 ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}>
+                    <CardContent className="p-2 text-center">
+                      <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
+                    </CardContent>
+                  </Card>
+                  <div className="flex flex-col space-y-2">
+                    {!subSkill.completed && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+                        className="skeuomorphic-button-dark text-xs"
+                      >
+                        Learn
+                      </Button>
+                    )}
+                    {!subSkill.completed && (
+                      <Button
+                        size="sm"
+                        onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+                        className="skeuomorphic-button text-xs"
+                      >
+                        Complete
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
+                {index < skill.level2SubSkills.length - 1 && (
+                  <ArrowRight className="text-neuyellow" size={24} />
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
