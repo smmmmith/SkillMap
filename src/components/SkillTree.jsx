@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import NotReadyDialog from './NotReadyDialog';
 
-const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials }) => {
+const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMaterials, markSkillMastered }) => {
   const [isNotReadyDialogOpen, setIsNotReadyDialogOpen] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [hoveredSubSkill, setHoveredSubSkill] = useState(null);
@@ -118,7 +118,7 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           ))}
         </div>
       </div>
-      {areAllSubSkillsCompleted(skill.levels[currentLevel]) && !isLastLevel && (
+      {areAllSubSkillsCompleted(skill.levels[currentLevel]) && (
         <div className="mt-4 text-center space-x-4">
           <Button 
             className="skeuomorphic-button" 
@@ -128,20 +128,18 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
           </Button>
           <Button 
             className="skeuomorphic-button-dark" 
-            onClick={handleNotReadyClick}
+            onClick={() => markSkillMastered(skill.id)}
           >
-            Not Ready to Practice
+            Completed Independently
           </Button>
-        </div>
-      )}
-      {isLastLevel && areAllSubSkillsCompleted(skill.levels[currentLevel]) && (
-        <div className="mt-4 text-center">
-          <Button 
-            className="skeuomorphic-button" 
-            onClick={() => logPractice(skill)}
-          >
-            Log Practice
-          </Button>
+          {!isLastLevel && (
+            <Button 
+              className="skeuomorphic-button-dark" 
+              onClick={handleNotReadyClick}
+            >
+              Not Ready to Practice
+            </Button>
+          )}
         </div>
       )}
       <NotReadyDialog 
