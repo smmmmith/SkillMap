@@ -23,18 +23,24 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
   const isLastLevel = skill.levels && currentLevel === skill.levels.length - 1;
 
   const FloatingButtons = ({ subSkill }) => (
-    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2">
+    <div className="absolute z-10 mt-2 bg-neugray-dark rounded-md shadow-lg p-2" style={{ minWidth: '120px' }}>
       <Button
         size="sm"
         variant="outline"
-        onClick={() => showLearningMaterials(skill.id, subSkill.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          showLearningMaterials(skill.id, subSkill.id);
+        }}
         className="skeuomorphic-button-dark text-xs mb-2 w-full"
       >
         Learn
       </Button>
       <Button
         size="sm"
-        onClick={() => markSubSkillCompleted(skill.id, subSkill.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          markSubSkillCompleted(skill.id, subSkill.id);
+        }}
         className="skeuomorphic-button text-xs w-full"
       >
         Complete
@@ -49,11 +55,13 @@ const SkillTree = ({ skill, markSubSkillCompleted, logPractice, showLearningMate
       <div className="flex justify-center items-center space-x-4 overflow-x-auto py-4">
         {level.subSkills.map((subSkill, index) => (
           <React.Fragment key={subSkill.id}>
-            <div className="flex flex-col items-center relative">
+            <div 
+              className="flex flex-col items-center relative"
+              onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
+              onMouseLeave={() => setHoveredSubSkill(null)}
+            >
               <Card 
                 className={`w-32 mb-2 cursor-pointer ${subSkill.completed ? 'bg-neuyellow' : 'skeuomorphic-card'}`}
-                onMouseEnter={() => setHoveredSubSkill(subSkill.id)}
-                onMouseLeave={() => setHoveredSubSkill(null)}
               >
                 <CardContent className="p-2 text-center">
                   <p className={`text-sm ${subSkill.completed ? 'text-neugray' : 'text-white'}`}>{subSkill.name}</p>
